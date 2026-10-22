@@ -1,47 +1,57 @@
 # 🛡️ AI-Powered Automated Code Reviewer & Vulnerability Scanner
 
-A hybrid code inspection tool combining deterministic static code analysis with Large Language Model (LLM) reasoning to catch security vulnerabilities, compute maintainability metrics, and provide context-aware code refactoring.
+A hybrid code intelligence and security auditing platform built with Python, Streamlit, and Google GenAI. The application combines local deterministic parsing (Abstract Syntax Trees and Radon software metrics) with Large Language Model semantic reasoning to deliver real-time vulnerability detection, maintainability scoring, and automated refactoring.
 
 ---
 
 ## 🚀 Key Features
 
-* **Deterministic Static AST Inspection:** Analyzes Python's Abstract Syntax Tree (`ast`) to catch critical security risks such as unsafe evaluations (`eval()`, `exec()`) and hardcoded credentials.
-* **Radon Software Metrics:** Computes Cyclomatic Complexity (CC) and Maintainability Index (MI) scores.
-* **Semantic LLM Review:** Uses the Google Gemini 2.5 Flash model to detect logic flaws, performance bottlenecks, and generate clean, secure refactored code.
-* **Interactive UI:** Built using Streamlit for instant feedback and side-by-side diagnostic views.
+- **Hybrid Analysis Architecture:** 
+  - **Deterministic Static Engine:** Uses Python's native `ast` module and regex heuristic scanners to detect dangerous calls (`eval`, `exec`, `system`, `gets`) and exposed credentials without latency.
+  - **Quantitative Code Metrics:** Computes real-time **Cyclomatic Complexity (CC)** and **Maintainability Index (MI)** via `radon`.
+  - **Semantic AI Engine:** Leverages Google's Gemini Flash model to identify subtle logical bugs, memory hazards, edge-case failures, and generate clean, idiomatic refactors.
+- **Multi-Language Support:** Static checks and AI review configured for **Python, Java, JavaScript, C, C++, and Go**.
+- **Modular Design:** Strict Separation of Concerns (SoC) dividing templates, static analyzers, and AI client logic.
+- **Enterprise Secret Management:** Secure credential loading via background `.env` configurations.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Project Architecture
 
-* **Language:** Python 3.10+
-* **Frontend / Dashboard:** [Streamlit](https://streamlit.io/)
-* **Static Analysis:** Python `ast` module, [Radon](https://radon.readthedocs.io/)
-* **AI Engine:** Google Gemini API (`gemini-2.5-flash` via `google-genai` SDK)
+ai-code-reviewer/
+│
+├── .env.example          # Template for required environment variables
+├── .gitignore            # Excludes venv, .env, and cache files
+├── requirements.txt      # Project dependencies
+├── README.md             # Documentation
+│
+├── templates.py          # Pre-configured multi-language code snippets
+├── analyzers.py          # AST parser, regex security checks, Radon metrics
+├── ai_engine.py          # Gemini API client with automated retry/fallback logic
+└── app.py                # Streamlit UI controller and presentation layer
 
 ---
 
 ## 📦 Installation & Setup
 
-### 1. Clone the repository
-```bash
-git clone [https://github.com/YOUR_USERNAME/ai-code-reviewer.git](https://github.com/YOUR_USERNAME/ai-code-reviewer.git)
-cd ai-code-reviewer
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/](https://github.com/)<YOUR_USERNAME>/ai-code-reviewer.git
+   cd ai-code-reviewer
 
-# Create and activate a virtual environment
-python -m venv venv
-# On Windows:
-.\venv\Scripts\activate
-# On Linux/macOS:
+# Create and activate a virtual environment:
+ python -m venv venv
+# Windows (PowerShell)
+.\venv\Scripts\Activate.ps1
+# macOS/Linux
 source venv/bin/activate
 
-# Install dependencies
+# Install dependencies:
 pip install -r requirements.txt
 
-# Run the application
+# Configure API Credentials:
+Create a .env file in the project root:
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Run the Application:
 streamlit run app.py
-
-# 🔑 Configuration
-Get a free Gemini API key from Google AI Studio and enter it in the application's sidebar to activate semantic review.
-
