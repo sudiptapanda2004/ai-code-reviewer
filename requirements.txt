@@ -1,3 +1,4 @@
 streamlit
 radon
-google-genai
+python-dotenv
+groq
